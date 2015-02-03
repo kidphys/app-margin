@@ -1,0 +1,97 @@
+<!doctype html>
+<html ng-app="MarginApp">
+  <head>
+    <title>The Margin Loan App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <!-- numberal is used to format/unformat number -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <script src="margin.js"></script>
+  </head>
+  <body ng-controller="MarginAppController">
+
+    <div class='row'>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Tài khoản</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <th>Mã</th>
+                            <th>Giá trị</th>
+                            <th>Xóa</th>
+                        </tr>
+                        <tr ng-repeat="stock in account.stockBook">
+                            <td>{{stock.symbol}}</td>
+                            <td>{{stock.amount}}</td>
+                            <td><a href="#" class="glyphicon glyphicon-remove" aria-hidden="true"ng-click="removeStock(account.stockBook, stock)"></a></td>
+                        </tr>
+                    </table>
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="{{new_stock}}" ng-model="new_stock">
+                      <span class="input-group-btn">
+                        <button ng-click="add_stock(account.stockBook, new_stock)" class="btn btn-default" type="button">Thêm</button>
+                      </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Mua mã</span>
+              <input type="text" class="form-control" placeholder="VND" aria-describedby="basic-addon1">
+              <span class="input-group-addon" id="basic-addon1">Giá trị</span>
+              <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loan Catalog -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Nguồn vay nợ</div>
+                <div class="panel-body">
+                    <div class="col-md-4" ng-repeat="product in loanCatalog">
+                        <h3>{{product.name}}</h3>
+                        <table class="table">
+                            <tr>
+                                <th>Mã</th>
+                                <th>Tỉ lệ</th>
+                                <th>Xóa</th>
+                            </tr>
+                            <tr ng-repeat="rate in product.rates">
+                                <td>{{rate.symbol}}</td>
+                                <td>{{rate.rate}}</td>
+                                <td><a href="#" class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="remove_rate(product.rates, rate)"></a></td>
+                            </tr>
+                        </table>
+                        <div class="input-group">
+                          <input type="text" ng-model="new_rate_str" class="form-control" placeholder="{{new_rate_str}}">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-click="add_rate(product.rates, new_rate_str)">Thêm</button>
+                          </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Thêm nguồn</button>
+                          </span>
+                          <input type="text" class="form-control" placeholder="Tn">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </body>
+</html>
