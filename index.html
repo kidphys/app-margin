@@ -32,7 +32,7 @@
                         </tr>
                     </table>
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="{{new_stock}}" ng-model="new_stock">
+                      <input type="text" class="form-control" placeholder="VND 10000" ng-model="new_stock">
                       <span class="input-group-btn">
                         <button ng-click="add_stock(account.stockBook, new_stock)" class="btn btn-default" type="button">Thêm</button>
                       </span>
@@ -47,7 +47,7 @@
               <span class="input-group-addon" id="basic-addon1">Giá trị</span>
               <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1">
               <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Go!</button>
+                <button class="btn btn-default" type="button" ng-click="send_data()">Go!</button>
               </span>
             </div>
         </div>
@@ -74,7 +74,7 @@
                             </tr>
                         </table>
                         <div class="input-group">
-                          <input type="text" ng-model="new_rate_str" class="form-control" placeholder="{{new_rate_str}}">
+                          <input type="text" ng-model="new_rate_str" class="form-control" placeholder="SHS 0.5">
                           <span class="input-group-btn">
                             <button class="btn btn-default" type="button" ng-click="add_rate(product.rates, new_rate_str)">Thêm</button>
                           </span>
