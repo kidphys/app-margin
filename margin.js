@@ -1,6 +1,10 @@
 var marginApp = angular.module('MarginApp', []);
 
 marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope, $http) {
+    function alert(message){
+        $('#alert-message').html('<div class="alert alert-warning" role="alert" data-dismiss="alert">' + message + '</div>');
+    }
+
     $scope.symbol = ''; // target symbol to calculate
     $scope.account = {};
     $scope.account.stock_book = [
@@ -114,31 +118,38 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
         'totals': [2000, 3000, 1234],
     }
 
+    function validate(symbol){
+        if (symbol == ''){
+            alert('')
+        }
+    }
+
     $scope.send_data = function(){
-        console.log("Calculating purchasing power",
-                    $scope.account.stock_book,
-                    $scope.loan_catalog
-                    );
-        $.ajax({
-            type: 'get',
-            url: 'http://localhost:8080/pp',
-            data: {
-                'stock_book': JSON.stringify($scope.account.stock_book),
-                'loan_catalog': JSON.stringify($scope.loan_catalog),
-                'symbol': $scope.symbol,
-            },
-            dataType: 'json',
-        })
-        .done(function(data){
-            console.log('result', data);
-            var names = loan_names();
-            // force re-fresh, other-wise list will not be fresh immediately
-            $scope.$apply(function(){
-                $scope.result.headers = result_header(data['allocation'], names);
-                $scope.result.allocations = result_allocation(data['allocation'], names);
-                $scope.result.pp = data['pp'];
-                $scope.result.totals = result_total($scope.result.allocations);
-            });
-        });
+        alert('Hello')
+        // console.log("Calculating purchasing power",
+        //             $scope.account.stock_book,
+        //             $scope.loan_catalog
+        //             );
+        // $.ajax({
+        //     type: 'get',
+        //     url: 'http://localhost:8080/pp',
+        //     data: {
+        //         'stock_book': JSON.stringify($scope.account.stock_book),
+        //         'loan_catalog': JSON.stringify($scope.loan_catalog),
+        //         'symbol': $scope.symbol,
+        //     },
+        //     dataType: 'json',
+        // })
+        // .done(function(data){
+        //     console.log('result', data);
+        //     var names = loan_names();
+        //     // force re-fresh, other-wise list will not be fresh immediately
+        //     $scope.$apply(function(){
+        //         $scope.result.headers = result_header(data['allocation'], names);
+        //         $scope.result.allocations = result_allocation(data['allocation'], names);
+        //         $scope.result.pp = data['pp'];
+        //         $scope.result.totals = result_total($scope.result.allocations);
+        //     });
+        // });
     }
 }]);

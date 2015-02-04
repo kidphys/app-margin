@@ -13,7 +13,7 @@
     <script src="margin.js"></script>
   </head>
   <body ng-controller="MarginAppController">
-
+    <div id='alert-message'></div>
     <div class='row'>
         <div class="col-md-4">
             <div class="panel panel-default">
@@ -43,11 +43,11 @@
         <div class="panel col-md-4">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon1">Mua mã</span>
-              <input type="text" class="form-control" placeholder="VND" aria-describedby="basic-addon1" ng-model='symbol'>
+              <input type="text" class="form-control" placeholder="VND" aria-describedby="basic-addon1" ng-model="symbol">
               <span class="input-group-addon" id="basic-addon1">Giá trị</span>
               <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1">
               <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="send_data()">Go!</button>
+                <button class="btn btn-default" type="button" ng-click="send_data()" style="display: valid_state">Go!</button>
               </span>
             </div>
             <div class="result">
@@ -62,7 +62,6 @@
                   <td>{{allocation.name}}</td>
                   <!-- prevent angularjs rendering error when value is duplicated -->
                   <td ng-repeat="amount in allocation.amount track by $index">{{amount}},000</td>
-                  <td/>
                 </tr>
                 <tr>
                   <td><b>Tổng</b></td>
