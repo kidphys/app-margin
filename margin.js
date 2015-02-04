@@ -10,17 +10,24 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
 
     $scope.loan_catalog = [
         {
-            'name': 'mr',
+            'name': 'MR',
             'rates': [
                 {'symbol': 'VND', 'rate': 0.5},
                 {'symbol': 'SSI', 'rate': 0.6},
             ]
         },
         {
-            'name': 'df',
+            'name': 'DF',
             'rates': [
                 {'symbol': 'ACB', 'rate': 0.3},
                 {'symbol': 'SSI', 'rate': 0.5},
+            ]
+        },
+        {
+            'name': 'GOD',
+            'rates': [
+                {'symbol': 'ACB', 'rate': 0.8},
+                {'symbol': 'SSI', 'rate': 0.8},
             ]
         },
     ];
@@ -84,7 +91,6 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
     }
 
     function result_total(result_allocations){
-        console.log('input', result_allocations);
         var length  = result_allocations[0]['amount'].length;
         var result = [];
         for(var i = 0; i < length; i++){
@@ -99,10 +105,11 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
     }
 
     $scope.result = {
-        'headers': ['vnd', 'ssi', 'pp'],
+        'headers': ['VND', 'SSI', 'PP'],
         'allocations': [
-            {'name': 'mr', 'amount': [2000, 1500, 2500]},
-            {'name': 'df', 'amount': [4000, 1500, 2500]},
+            {'name': 'MR', 'amount': [2000, 1500, 2500]},
+            {'name': 'DF', 'amount': [4000, 1500, 2500]},
+            {'name': 'GOD', 'amount': [8000, 1504, 2504]},
         ],
         'totals': [2000, 3000, 1234],
     }
@@ -125,7 +132,7 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
         .done(function(data){
             console.log('result', data);
             var names = loan_names();
-            // force re-fresh, other-wise list will not be fresh unexpectedly
+            // force re-fresh, other-wise list will not be fresh immediately
             $scope.$apply(function(){
                 $scope.result.headers = result_header(data['allocation'], names);
                 $scope.result.allocations = result_allocation(data['allocation'], names);
@@ -134,5 +141,4 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
             });
         });
     }
-
 }]);
