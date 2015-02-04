@@ -45,7 +45,7 @@
               <span class="input-group-addon" id="basic-addon1">Mua mã</span>
               <input type="text" class="form-control" placeholder="VND" aria-describedby="basic-addon1" ng-model="symbol">
               <span class="input-group-addon" id="basic-addon1">Giá trị</span>
-              <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1">
+              <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1" ng-model="trade_amount">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button" ng-click="send_data()" style="display: valid_state">Go!</button>
               </span>
@@ -65,10 +65,10 @@
                 </tr>
                 <tr>
                   <td><b>Tổng</b></td>
-                  <td ng-repeat="total in result.totals">{{total}},000</td>
+                  <td ng-repeat="total in result.totals track by $index">{{total}},000</td>
                 </tr>
               </table>
-              <p>Sức mua tối đa: <b>{{result.pp}},000</b></p>
+              <p>Sức mua: <b>{{result.pp}},000</b></p>
             </div>
         </div>
     </div>
