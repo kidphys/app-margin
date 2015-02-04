@@ -210,5 +210,8 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
             $scope.symbol
             )
         .done(update_pp_result);
+
+
+        $('[data-toggle="tooltip"]').tooltip()
     }
 }]);

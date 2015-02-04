@@ -42,10 +42,10 @@
         </div>
         <div class="panel col-md-4">
             <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">Mua mã</span>
+              <span class="input-group-addon" id="basic-addon1" >Mua mã</span>
               <input type="text" class="form-control" placeholder="VND" aria-describedby="basic-addon1" ng-model="symbol">
               <span class="input-group-addon" id="basic-addon1">Giá trị</span>
-              <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1" ng-model="trade_amount">
+              <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1" ng-model="trade_amount"  data-toggle="tooltip" data-placement="bottom" title="Khi giá trị bỏ trống, sức mua tối đa sẽ được tính">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button" ng-click="send_data()" style="display: valid_state">Go!</button>
               </span>
@@ -71,6 +71,18 @@
               <p>Sức mua: <b>{{result.pp}},000</b></p>
             </div>
         </div>
+
+        <!-- GUIDE -->
+        <div class="panel col-md-4">
+            <p>
+            Hệ thống tự tính phân bổ sức mua vào các nguồn vay khác nhau (trên lý thuyết, số nguồn vay không hạn chế).
+            </p>
+            <p>Để đơn giản UI, input của các mã là giá trị thay vì giá + khối lượng.</p>
+            <p>Cột dọc: giá trị cầm cố đối với mã, giá trị vay đối với cột "PP"</p>
+            <p>Trong trường hợp giá muốn mua nhỏ hơn số tối đa, nguồn vay đầu tiên bên phải sẽ được ưu tiên.</p>
+            <p>Be gentle, this is just a demo</p>
+        </div>
+
     </div>
 
     <!-- Loan Catalog -->
