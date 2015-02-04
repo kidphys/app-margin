@@ -93,7 +93,7 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
         }
     }
 
-    function loan_names(){
+    function get_loan_names(){
         return $.map($scope.loan_catalog, function(product){return product.name});
     }
 
@@ -169,12 +169,12 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
         }
 
         function update_pp_result(data){
-            console.log('result', data);
-            var names = loan_names();
-            // force re-fresh, other-wise list will not be fresh immediately
+            console.log('Result updating...', data);
+            var loan_names = get_loan_names();
+            // usin $apply to force refresh, other-wise list will not be fresh immediately
             $scope.$apply(function(){
-                $scope.result.headers = result_header(data['allocation'], names);
-                $scope.result.allocations = result_allocation(data['allocation'], names);
+                $scope.result.headers = result_header(data['allocation'], loan_names);
+                $scope.result.allocations = result_allocation(data['allocation'], loan_names);
                 $scope.result.pp = data['pp'];
                 $scope.result.totals = result_total($scope.result.allocations);
             });
