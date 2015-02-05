@@ -3,8 +3,6 @@ var MAX_PP_URL = 'http://54.148.105.53/pp';
 var PRORITIZED_PP_URL = 'http://54.148.105.53/prioritized_pp';
 
 marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope, $http) {
-    $('[data-toggle="tooltip"]').tooltip();
-
     function alert(message){
         $('#alert-message').html('<div class="alert alert-warning" role="alert" data-dismiss="alert">' + message + '</div>');
     }
@@ -215,4 +213,6 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
             )
         .done(update_pp_result);
     }
+    $(function () { $("[data-toggle='tooltip']").tooltip(); });
 }]);
+
