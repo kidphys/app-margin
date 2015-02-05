@@ -1,4 +1,6 @@
 var marginApp = angular.module('MarginApp', []);
+var MAX_PP_URL = 'http://54.148.105.53/pp';
+var PRORITIZED_PP_URL = 'http://54.148.105.53/prioritized_pp';
 
 marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope, $http) {
     function alert(message){
@@ -143,7 +145,7 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
                                         trade_amount){
             return $.ajax({
                 type: 'get',
-                url: 'http://localhost:8080/prioritized_pp',
+                url: PRORITIZED_PP_URL,
                 data: {
                     'stock_book': JSON.stringify(stock_book),
                     'loan_catalog': JSON.stringify(loan_catalog),
@@ -158,7 +160,7 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
         function make_pp_ajax(stock_book, loan_catalog, symbol){
             return $.ajax({
                 type: 'get',
-                url: 'http://localhost:8080/pp',
+                url: MAX_PP_URL,
                 data: {
                     'stock_book': JSON.stringify(stock_book),
                     'loan_catalog': JSON.stringify(loan_catalog),
