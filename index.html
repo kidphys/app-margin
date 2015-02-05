@@ -32,9 +32,9 @@
                         </tr>
                     </table>
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="VND 10000" ng-model="new_stock">
+                      <input type="text" data-toggle="tooltip" data-placement="bottom" title="Nếu mã đã có, giá trị tự động cập nhật" class="form-control" placeholder="VND 10000" ng-model="new_stock">
                       <span class="input-group-btn">
-                        <button ng-click="add_stock(account.stock_book, new_stock)" class="btn btn-default" type="button" data-toggle="tooltip" data-placement="bottom" title="Nếu mã đã có, giá trị tự động cập nhật">Thêm/Sửa</button>
+                        <button ng-click="add_stock(account.stock_book, new_stock)" class="btn btn-default" type="button">Thêm/Sửa</button>
                       </span>
                     </div>
                 </div>
@@ -43,11 +43,11 @@
         <div class="panel col-md-4">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon1" >Mua mã</span>
-              <input type="text" class="form-control" placeholder="VND" aria-describedby="basic-addon1" ng-model="symbol">
+              <input type="text" data-toggle="tooltip" data-placement="bottom" title="Bắt buộc"  class="form-control" placeholder="VND" aria-describedby="basic-addon1" ng-model="symbol">
               <span class="input-group-addon" id="basic-addon1">Giá trị</span>
               <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1" ng-model="trade_amount"  data-toggle="tooltip" data-placement="bottom" title="Khi giá trị bỏ trống, sức mua tối đa sẽ được tính">
               <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="send_data()" style="display: valid_state" data-toggle="tooltip" data-placement="bottom" title="Cập nhật sức mua và cách phân bổ">Go!</button>
+                <button class="btn btn-default" type="button" ng-click="send_data()" style="display: valid_state">Go!</button>
               </span>
             </div>
             <div class="result">
@@ -106,7 +106,7 @@
                             </tr>
                         </table>
                         <div class="input-group">
-                          <input type="text" ng-model="new_rate_str" class="form-control" placeholder="SHS 0.5">
+                          <input type="text" data-toggle="tooltip" data-placement="bottom" title="Tỷ lệ trong khoảng 0-1" ng-model="new_rate_str" class="form-control" placeholder="SHS 0.5">
                           <span class="input-group-btn">
                             <button class="btn btn-default" type="button" ng-click="add_rate(product.rates, new_rate_str)">Thêm/Sửa</button>
                           </span>
