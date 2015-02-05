@@ -34,7 +34,7 @@
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="VND 10000" ng-model="new_stock">
                       <span class="input-group-btn">
-                        <button ng-click="add_stock(account.stock_book, new_stock)" class="btn btn-default" type="button">Thêm/Sửa</button>
+                        <button ng-click="add_stock(account.stock_book, new_stock)" class="btn btn-default" type="button" data-toggle="tooltip" data-placement="bottom" title="Nếu mã đã có, giá trị tự động cập nhật">Thêm/Sửa</button>
                       </span>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
               <span class="input-group-addon" id="basic-addon1">Giá trị</span>
               <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1" ng-model="trade_amount"  data-toggle="tooltip" data-placement="bottom" title="Khi giá trị bỏ trống, sức mua tối đa sẽ được tính">
               <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="send_data()" style="display: valid_state">Go!</button>
+                <button class="btn btn-default" type="button" ng-click="send_data()" style="display: valid_state" data-toggle="tooltip" data-placement="bottom" title="Cập nhật sức mua và cách phân bổ">Go!</button>
               </span>
             </div>
             <div class="result">
