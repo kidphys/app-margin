@@ -77,8 +77,9 @@
             <p>
             Khi chỉ input mã muốn mua, hệ thống sẽ tự tính sức mua tối đa có thể phân bổ trên tất cả các nguồn.
             Khi có input mã + giá trị muốn mua, hệ thống sẽ tối ưu khoản vay có thể trên nguồn vay đầu tiên bên trái (MR).
-            Trong mọi trường hợp, hệ thống luôn đảm bảo: tỷ lệ tài sản/nợ >= 1 ở mọi nguồn.
+            Trong mọi trường hợp, hệ thống luôn đảm bảo: tỷ lệ tài sản/nợ >= 1 ở mọi nguồn, tức là:
             </p>
+            <p>Tổng số vay <= Tài sản đảm bảo hiện có + tài sản đảm bảo trên chứng khoán mua </p>
             <p>Để đơn giản UI, input tài khoản là CK và giá trị CK</p>
             <p>Cách đọc kết quả:</p>
             <p>Cột dọc: giá trị cầm cố đối với mã, giá trị vay đối với cột "PP"</p>
