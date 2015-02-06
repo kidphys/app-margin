@@ -41,15 +41,16 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
 
     $scope.new_stock = "";
     $scope.add_stock = function(stock_book, str){
-        var stock = str.split(' ');
-        var amount = parseInt(stock[1]);
+        var input = str.split(' ');
+        var amount = parseInt(input[1]);
+        var symbol = input[0].toUpperCase();
         for (var idx in stock_book){
-            if (stock_book[idx].symbol == stock[0]){
+            if (stock_book[idx].symbol == symbol){
                 stock_book[idx].amount = amount;
                 return;
             }
         }
-        stock_book.push({'symbol': stock[0], 'amount': amount});
+        stock_book.push({'symbol': symbol, 'amount': amount});
     };
 
     $scope.removeStock = function(stock_book, stock){
@@ -79,13 +80,14 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
         if (!validate(rate_number)){
             return;
         }
+        var updated_symbol = rate[0].toUpperCase();
         for (var idx in rates){
-            if (rates[idx].symbol == rate[0]){
+            if (rates[idx].symbol == updated_symbol){
                 rates[idx].rate = rate_number;
                 return;
             }
         }
-        rates.push({'symbol': rate[0], 'rate': rate_number});
+        rates.push({'symbol': updated_symbol, 'rate': rate_number});
     }
 
     $scope.remove_rate = function(rates, rate){
@@ -149,7 +151,7 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
                 data: {
                     'stock_book': JSON.stringify(stock_book),
                     'loan_catalog': JSON.stringify(loan_catalog),
-                    'symbol': symbol.toUpperCase(),
+                    'symbol': symbol,
                     'trade_amount': trade_amount,
                     'loan_name': loan_catalog[0].name
                 },
@@ -164,7 +166,7 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
                 data: {
                     'stock_book': JSON.stringify(stock_book),
                     'loan_catalog': JSON.stringify(loan_catalog),
-                    'symbol': symbol.toUpperCase(),
+                    'symbol': symbol,
                 },
                 dataType: 'json',
             });
