@@ -188,6 +188,10 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
             alert('Symbol can not be empty!');
             return;
         }
+
+        // make sure symbol is capital
+        $scope.symbol = $scope.symbol.toUpperCase();
+
         var trade_amount = parseFloat($scope.trade_amount);
         if (trade_amount > 0){
             console.log("Calculate priority purchasing power",
