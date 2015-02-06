@@ -2,6 +2,24 @@ var marginApp = angular.module('MarginApp', []);
 var MAX_PP_URL = 'http://54.148.105.53/pp';
 var PRORITIZED_PP_URL = 'http://54.148.105.53/prioritized_pp';
 
+/*
+    In case of re-paying debt, the loan can be distributed differently >> Đảo nợ.
+    Also, blocking stock should be released, if the corresponding debt is already paid.
+ */
+
+marginApp.filter('vn_currency', function(){
+    return function(number){
+        return number + ' VNĐ';
+    }
+});
+
+marginApp.filter('numeral', function(){
+    return function(amount) {
+        return numeral(amount).format('0,0');
+    }
+});
+
+
 marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope, $http) {
     function alert(message){
         $('#alert-message').html('<div class="alert alert-warning" role="alert" data-dismiss="alert">' + message + '</div>');
@@ -20,21 +38,27 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
             'rates': [
                 {'symbol': 'VND', 'rate': 0.5},
                 {'symbol': 'SSI', 'rate': 0.6},
-            ]
+            ],
+            'fee': 0.5,
+            'limit': 10000
         },
         {
             'name': 'DF',
             'rates': [
                 {'symbol': 'VND', 'rate': 0.6},
                 {'symbol': 'SSI', 'rate': 0.7},
-            ]
+            ],
+            'fee': 0.5,
+            'limit': 10000
         },
         {
             'name': 'GOD',
             'rates': [
                 {'symbol': 'ACB', 'rate': 0.8},
                 {'symbol': 'SSI', 'rate': 0.8},
-            ]
+            ],
+            'fee': 0.5,
+            'limit': 10000
         },
     ];
 
@@ -138,76 +162,68 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
         'totals': ['--', '--', '--'],
     }
 
-    function validate(symbol){
+    function symbol_is_entered(symbol){
         return symbol != '';
     }
 
-    $scope.send_data = function(){
-        function make_prority_ajax(stock_book, loan_catalog, symbol,
-                                        trade_amount){
-            return $.ajax({
-                type: 'get',
-                url: PRORITIZED_PP_URL,
-                data: {
-                    'stock_book': JSON.stringify(stock_book),
-                    'loan_catalog': JSON.stringify(loan_catalog),
-                    'symbol': symbol,
-                    'trade_amount': trade_amount,
-                    'loan_name': loan_catalog[0].name
-                },
-                dataType: 'json',
-            });
-        }
+    function make_pp_ajax(stock_book, loan_catalog, symbol){
+        return $.ajax({
+            type: 'get',
+            url: MAX_PP_URL,
+            data: {
+                'stock_book': JSON.stringify(stock_book),
+                'loan_catalog': JSON.stringify(loan_catalog),
+                'symbol': symbol,
+            },
+            dataType: 'json',
+        });
+    }
 
-        function make_pp_ajax(stock_book, loan_catalog, symbol){
-            return $.ajax({
-                type: 'get',
-                url: MAX_PP_URL,
-                data: {
-                    'stock_book': JSON.stringify(stock_book),
-                    'loan_catalog': JSON.stringify(loan_catalog),
-                    'symbol': symbol,
-                },
-                dataType: 'json',
-            });
-        }
+    function update_pp_result(data){
+        var loan_names = get_loan_names();
+        // usin $apply to force refresh, other-wise list will not be fresh immediately
+        $scope.$apply(function(){
+            $scope.result.headers = result_header(data['allocation'], loan_names);
+            $scope.result.allocations = result_allocation(data['allocation'], loan_names);
+            $scope.result.pp = data['pp'];
+            $scope.result.totals = result_total($scope.result.allocations);
+        });
+    }
 
-        function update_pp_result(data){
-            console.log('Result updating...', data);
-            var loan_names = get_loan_names();
-            // usin $apply to force refresh, other-wise list will not be fresh immediately
-            $scope.$apply(function(){
-                $scope.result.headers = result_header(data['allocation'], loan_names);
-                $scope.result.allocations = result_allocation(data['allocation'], loan_names);
-                $scope.result.pp = data['pp'];
-                $scope.result.totals = result_total($scope.result.allocations);
-            });
-        }
+    function make_prority_ajax(stock_book, loan_catalog, symbol,
+                                    trade_amount){
+        return $.ajax({
+            type: 'get',
+            url: PRORITIZED_PP_URL,
+            data: {
+                'stock_book': JSON.stringify(stock_book),
+                'loan_catalog': JSON.stringify(loan_catalog),
+                'symbol': symbol,
+                'trade_amount': trade_amount,
+                'loan_name': loan_catalog[0].name
+            },
+            dataType: 'json',
+        });
+    }
 
-        if(!validate($scope.symbol)){
-            alert('Symbol can not be empty!');
-            return;
-        }
+    function request_priority_purchasing_power(trade_amount){
+        console.log("Calculate priority purchasing power",
+                    $scope.account.stock_book,
+                    $scope.loan_catalog
+                    );
+        make_prority_ajax(
+            $scope.account.stock_book,
+            $scope.loan_catalog,
+            $scope.symbol,
+            trade_amount
+            )
+        .done(update_pp_result)
+        .done(function(data){
+            console.log('Calculated result is updated with: ', data);
+        });
+    }
 
-        // make sure symbol is capital
-        $scope.symbol = $scope.symbol.toUpperCase();
-
-        var trade_amount = parseFloat($scope.trade_amount);
-        if (trade_amount > 0){
-            console.log("Calculate priority purchasing power",
-                        $scope.account.stock_book,
-                        $scope.loan_catalog
-                        );
-            make_prority_ajax(
-                $scope.account.stock_book,
-                $scope.loan_catalog,
-                $scope.symbol,
-                trade_amount
-                )
-            .done(update_pp_result);
-            return;
-        }
-
+    function request_max_purchasing_power(){
         console.log("Calculating purchasing power",
                     $scope.account.stock_book,
                     $scope.loan_catalog
@@ -217,8 +233,33 @@ marginApp.controller('MarginAppController', ['$scope', '$http', function ($scope
             $scope.loan_catalog,
             $scope.symbol
             )
-        .done(update_pp_result);
+        .done(update_pp_result)
+        .done(function(data){
+            console.log('Calculated result is updated with: ', data);
+        });
     }
+
+
+    $scope.undefined = function(){
+        alert('This function is not implemented yet');
+    }
+
+
+    $scope.cal_max_pp = function(){
+        if(!symbol_is_entered($scope.symbol)){
+            alert('Symbol can not be empty!');
+            return;
+        }
+
+        $scope.symbol = $scope.symbol.toUpperCase();
+        var trade_amount = parseFloat($scope.trade_amount);
+        if (trade_amount > 0){
+            return request_priority_purchasing_power(trade_amount);
+        }
+        request_max_purchasing_power();
+    }
+
+// enable tooltip for angularjs rendered elements
     $(function () { $("[data-toggle='tooltip']").tooltip(); });
 }]);
 
