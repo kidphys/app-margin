@@ -27,12 +27,12 @@
                         </tr>
                         <tr ng-repeat="stock in account.stock_book">
                             <td>{{stock.symbol}}</td>
-                            <td>{{stock.amount}},000</td>
+                            <td>{{stock.amount}},000 VNĐ</td>
                             <td><a href="#" class="glyphicon glyphicon-remove" aria-hidden="true"ng-click="removeStock(account.stock_book, stock)"></a></td>
                         </tr>
                     </table>
                     <div class="input-group">
-                      <input type="text" data-toggle="tooltip" data-placement="bottom" title="Nếu mã đã có, giá trị tự động cập nhật" class="form-control" placeholder="VND 10000" ng-model="new_stock">
+                      <input type="text" data-toggle="tooltip" data-placement="bottom" title="Input mã và giá trị, nếu mã đã có, giá trị tự động cập nhật" class="form-control" placeholder="VND 10000" ng-model="new_stock">
                       <span class="input-group-btn">
                         <button ng-click="add_stock(account.stock_book, new_stock)" class="btn btn-default" type="button">Thêm/Sửa</button>
                       </span>
@@ -61,14 +61,14 @@
                 <tr ng-repeat="allocation in result.allocations">
                   <td>{{allocation.name}}</td>
                   <!-- prevent angularjs rendering error when value is duplicated -->
-                  <td ng-repeat="amount in allocation.amount track by $index">{{amount}},000</td>
+                  <td ng-repeat="amount in allocation.amount track by $index">{{amount}},000 VNĐ</td>
                 </tr>
                 <tr>
                   <td><b>Tổng</b></td>
-                  <td ng-repeat="total in result.totals track by $index">{{total}},000</td>
+                  <td ng-repeat="total in result.totals track by $index">{{total}},000 VNĐ</td>
                 </tr>
               </table>
-              <p>Sức mua: <b>{{result.pp}},000</b></p>
+              <p>Sức mua: <b>{{result.pp}},000 VNĐ</b></p>
             </div>
         </div>
 
@@ -77,7 +77,7 @@
             <p>
             Hệ thống tự tính phân bổ sức mua vào các nguồn vay khác nhau (trên lý thuyết, số nguồn vay không hạn chế).
             </p>
-            <p>Để đơn giản UI, input của các mã là giá trị thay vì giá + khối lượng.</p>
+            <p>Để đơn giản UI, input tài khoản là CK và giá trị CK</p>
             <p>Cột dọc: giá trị cầm cố đối với mã, giá trị vay đối với cột "PP"</p>
             <p>Trong trường hợp giá muốn mua nhỏ hơn số tối đa, nguồn vay đầu tiên bên trái sẽ được ưu tiên.</p>
             <p>Be gentle, this is just a demo</p>
