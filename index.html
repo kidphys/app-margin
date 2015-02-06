@@ -75,9 +75,12 @@
         <!-- GUIDE -->
         <div class="panel col-md-4">
             <p>
-            Hệ thống tự tính phân bổ sức mua vào các nguồn vay khác nhau (trên lý thuyết, số nguồn vay không hạn chế).
+            Khi chỉ input mã muốn mua, hệ thống sẽ tự tính sức mua tối đa có thể phân bổ trên tất cả các nguồn.
+            Khi có input mã + giá trị muốn mua, hệ thống sẽ tối ưu khoản vay có thể trên nguồn vay đầu tiên bên trái (MR).
+            Trong mọi trường hợp, hệ thống luôn đảm bảo: tỷ lệ tài sản/nợ >= 1 ở mọi nguồn.
             </p>
             <p>Để đơn giản UI, input tài khoản là CK và giá trị CK</p>
+            <p>Cách đọc kết quả:</p>
             <p>Cột dọc: giá trị cầm cố đối với mã, giá trị vay đối với cột "PP"</p>
             <p>Trong trường hợp giá muốn mua nhỏ hơn số tối đa, nguồn vay đầu tiên bên trái sẽ được ưu tiên.</p>
             <p>Be gentle, this is just a demo</p>
