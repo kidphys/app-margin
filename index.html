@@ -60,14 +60,14 @@
                 <tr ng-repeat="allocation in result.allocations">
                   <td>{{allocation.name}}</td>
                   <!-- prevent angularjs rendering error when value is duplicated -->
-                  <td ng-repeat="amount in allocation.amount track by $index">{{amount}},000 VNĐ</td>
+                  <td ng-repeat="amount in allocation.amount track by $index">{{amount | numeral}}</td>
                 </tr>
                 <tr>
                   <td><b>Tổng</b></td>
-                  <td ng-repeat="total in result.totals track by $index">{{total}},000 VNĐ</td>
+                  <td ng-repeat="total in result.totals track by $index">{{total | numeral}}</td>
                 </tr>
               </table>
-              <p>Sức mua: <b>{{result.pp}},000 VNĐ</b></p>
+              <p>Sức mua: <b>{{result.pp | numeral}}</b></p>
             </div>
         </div>
         <!-- End functionaliry button -->
@@ -85,7 +85,7 @@
                         </tr>
                         <tr ng-repeat="stock in account.stock_book">
                             <td>{{stock.symbol}}</td>
-                            <td>{{stock.amount * 1000 | numeral | vn_currency}}</td>
+                            <td>{{stock.amount | numeral}}</td>
                             <td><a href="#" class="glyphicon glyphicon-remove" aria-hidden="true"ng-click="removeStock(account.stock_book, stock)"></a></td>
                         </tr>
                     </table>
@@ -139,18 +139,7 @@
 
                     </div>
 
-
-                    <!--
-                    <div class="col-md-4">
-                        <div class="input-group">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Thêm/Sửa nguồn</button>
-                          </span>
-                          <input type="text" class="form-control" placeholder="Tn">
-                        </div>
-                    </div>
-                    -->
-                </div>
+               </div>
             </div>
         </div>
     </div>

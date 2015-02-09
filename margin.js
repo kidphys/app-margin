@@ -7,12 +7,6 @@ var PRORITIZED_PP_URL = 'http://54.148.105.53/prioritized_pp';
     Also, blocking stock should be released, if the corresponding debt is already paid.
  */
 
-marginApp.filter('vn_currency', function(){
-    return function(number){
-        return number + ' VNĐ';
-    }
-});
-
 marginApp.filter('numeral', function(){
     return function(amount) {
         return numeral(amount).format('0,0');
