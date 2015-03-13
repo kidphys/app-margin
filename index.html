@@ -37,17 +37,17 @@
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon1" >Mua mã</span>
               <input type="text" data-toggle="tooltip" data-placement="bottom" title="Bắt buộc"  class="form-control" placeholder="VND" aria-describedby="basic-addon1" ng-model="symbol">
+              <span class="input-group-btn">
+                <button ng-click="vnds_cal_max_pp()" class="btn btn-default" type="button">Sức mua tối đa</button>
+              </span>
+            </div>
+
+            <!-- Limit amount - unimplemented
+            <div class="input-group">
               <span class="input-group-addon" id="basic-addon1">Giá trị</span>
               <input type="text" class="form-control" placeholder="100000" aria-describedby="basic-addon1" ng-model="trade_amount"  data-toggle="tooltip" data-placement="bottom" title="Khi giá trị bỏ trống, sức mua tối đa sẽ được tính">
             </div>
-
-            <div class="input-group">
-              <span class="input-group-btn">
-                <button ng-click="cal_max_pp()" class="btn btn-default" type="button">Sức mua tối đa</button>
-                <button ng-click="undefined()" class="btn btn-default" type="button">Phân bổ theo nguồn</button>
-                <button ng-click="undefined()" class="btn btn-default" type="button">Phân bổ theo phí</button>
-              </span>
-            </div>
+            -->
 
             <div class="result">
               <table class="table">
@@ -77,13 +77,19 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Tài khoản</div>
                 <div class="panel-body">
+                    <div class="input-group">
+                      <span class="input-group-addon" id="account-balance" >Tiền mặt</span>
+                      <input type="number" data-toggle="tooltip" data-placement="bottom" title="Tiền mặt hiện có trong tài khoản" ng-model="account.info.cash" class="form-control">
+                      <span class="input-group-addon" id="account-balance" >Hạn mức</span>
+                      <input type="number" data-toggle="tooltip" data-placement="bottom" title="Hạn mức tài khoản" ng-model="account.info.limit" class="form-control">
+                    </div>
                     <table class="table">
                         <tr>
                             <th>Mã</th>
                             <th>Giá trị</th>
                             <th>Xóa</th>
                         </tr>
-                        <tr ng-repeat="stock in account.stock_book">
+                        <tr ng-repeat="stock in account.stock">
                             <td>{{stock.symbol}}</td>
                             <td>{{stock.amount | numeral}}</td>
                             <td><a href="#" class="glyphicon glyphicon-remove" aria-hidden="true"ng-click="removeStock(account.stock_book, stock)"></a></td>
@@ -111,10 +117,10 @@
                     <div class="col-md-4" ng-repeat="product in loan_catalog">
                         <h3>{{product.name}}</h3>
                         <div class="input-group">
-                          <span class="input-group-addon" id="basic-addon1" >Phí (%)</span>
-                          <input type="number" data-toggle="tooltip" data-placement="bottom" title="Tỷ lệ trong khoảng 0-1 - chưa phát triển" ng-model="product.fee" class="form-control">
+                          <span class="input-group-addon" id="basic-addon1" >Nợ hiện tại</span>
+                          <input type="number" data-toggle="tooltip" data-placement="bottom" title="Nợ hiện tại của tài khoản của nguồn vay này" ng-model="product.info.balance" class="form-control">
                           <span class="input-group-addon" id="basic-addon1" >Hạn mức</span>
-                          <input type="number" data-toggle="tooltip" data-placement="bottom" title="Tỷ lệ trong khoảng 0-1, chưa phát triển" ng-model="product.limit" class="form-control">
+                          <input type="number" data-toggle="tooltip" data-placement="bottom" title="Tỷ lệ trong khoảng 0-1, chưa phát triển" ng-model="product.info.limit" class="form-control">
                         </div>
                         <table class="table">
                             <tr>
